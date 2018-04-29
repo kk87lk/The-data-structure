@@ -13,6 +13,28 @@ struct Tree
     Tree *left, *right;
     int flag;
 };
+typedef struct queue{
+    Tree *Data[Maxsize];
+    int front, rear;
+} Queue;
+int isemptyQueue(Queue* Q){
+    return (Q->front == Q->rear);
+}
+void InsertQueue(Queue* Q,Tree* root){
+    Q->Data[Q->rear] = root;
+    Q->rear=(Q->rear + 1) % Maxsize;
+}
+Tree* Delete(Queue* Q){
+    Tree* T;
+    T = Q->Data[Q->front];
+    Q->front = (Q->front + 1) % Maxsize;
+    return T;
+}
+Queue* CreateQueue(){
+    Queue *Q = (Queue *)malloc(sizeof(Queue));
+    Q->front = Q->rear = 0;
+    return Q;
+}
 Tree *PreBuildTree()
 {
     Elemtype x;
@@ -107,6 +129,19 @@ void AfterorderTree(Tree* root){
 		}
     }
 }
+void LineOrder(Tree* root){
+    Queue *Q = CreateQueue();
+    Tree *T;
+    if(!root) return;
+    InsertQueue(Q, root);
+    while (!isemptyQueue(Q))
+    {
+        T = Delete(Q);
+        printf("%c", T->data);
+        if(T->left) InsertQueue(Q,T->left);
+        if(T->right) InsertQueue(Q,T->right);
+    }
+}
 int main(){
     Tree *root = PreBuildTree();
     printf("In order:");
@@ -115,5 +150,7 @@ int main(){
     PreorderTree(root);
     printf("\nAfter order:");
     AfterorderTree(root);
+    printf("\nLine order:");
+    LineOrder(root);
     return 0;
 }

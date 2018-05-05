@@ -58,6 +58,6 @@ MLink CreatMLink(){
 }
 int main(){
     MLink H=CreatMLink();
-    printf("%d\n\n%d",H->V_next.next->V_next.next->down->V_next.v,H->V_next.next->V_next.next->right->V_next.v);
+    printf("%d\n\n%d",H->V_next.next->V_next.next->V_next.next->down->V_next.v,H->V_next.next->V_next.next->right->V_next.v);
     
 }
